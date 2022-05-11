@@ -7,6 +7,6 @@ urlpatterns = [
     path('', redirect),
     path('admin/', admin.site.urls),
     path('login/', login_view),
-    path('register/', register_view),
+    path('register/', register_view, name="register"),
     path('tasks/', tasks_view)
 ]

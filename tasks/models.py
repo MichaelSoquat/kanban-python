@@ -10,6 +10,9 @@ class Task(models.Model):
     description = models.TextField(max_length=512)
     created_at = models.DateField(default=date.today)
 
+    def __str__(self):
+        return "{0}".format(self.title)
+
 class Status(models.Model):
     status_choices = [
         ('todo','todo'),
