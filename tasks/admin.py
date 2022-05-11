@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from tasks.models import task, status
+from tasks.models import Task, Status
 
 # Register your models here.
-admin.site.register(task)
-admin.site.register(status)
+admin.site.register(Task)
+admin.site.register(Status)

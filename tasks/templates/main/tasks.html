@@ -1,1 +1,44 @@
-This is the Kanban-Board-Site
+<script>
+    async function requestToServer() {
+        event.preventDefault();
+        let titleValue = document.getElementById('title').value;
+        let descriptionValue = document.getElementById('description').value;
+        let todo = document.getElementById('todo');
+        todo.innerHTML += `Title: <span>${titleValue}</span><br>Description: <span>${descriptionValue}</span>`;
+
+        let fd = new FormData();
+        let token = `{{ csrf_token }}`;
+        fd.append('title', titleValue)
+        fd.append('description', descriptionValue)
+        fd.append('csrfmiddlewaretoken', token);
+        fd.append('status', 'todo')
+
+        let response = await fetch('', {
+            method: 'POST',
+            body: fd
+        })
+        console.log('response is', response)
+        let gotFromServer = await response.json();
+        json = JSON.parse(gotFromServer);
+        console.log('mit json is', gotFromServer)
+        console.log('mit parse is', json)
+    }
+</script>
+
+<form onsubmit="requestToServer(event)" method="post">
+    {% csrf_token %}
+    <span>Title:</span><input id="title" type="text" name="title">
+    <span>Description:</span><input id="description" type="text" name="description">
+    <button>
+        Create new Task
+    </button>
+
+    <div id="todo">
+
+    </div>
+
+    <div id="todoFromServer">
+        {% for task in tasks %} {{task.title}} {{task.description}} {% endfor %}
+    </div>
+
+</form>
