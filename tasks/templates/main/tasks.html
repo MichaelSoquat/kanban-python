@@ -1,4 +1,6 @@
+{%extends "base.html"%}
 <script>
+    abkürzung
     async function requestToServer() {
         event.preventDefault();
         let titleValue = document.getElementById('title').value;
@@ -24,21 +26,27 @@
         console.log('mit parse is', json)
     }
 </script>
+{%block content%}
+<div>
 
-<form onsubmit="requestToServer(event)" method="post">
-    {% csrf_token %}
-    <span>Title:</span><input id="title" type="text" name="title">
-    <span>Description:</span><input id="description" type="text" name="description">
-    <button>
+
+    <form onsubmit="requestToServer(event)" method="post">
+        {% csrf_token %}
+        <span>Title:</span><input id="title" type="text" name="title">
+        <span>Description:</span><input id="description" type="text" name="description">
+        <button>
         Create new Task
     </button>
 
-    <div id="todo">
+        <div id="todo">
 
-    </div>
+        </div>
 
-    <div id="todoFromServer">
-        {% for task in tasks %} {{task.title}} {{task.description}} {% endfor %}
-    </div>
+        <div id="todoFromServer">
+            {% for task in tasks %} {{task.title}} {{task.description}} {% endfor %}
+        </div>
 
-</form>
+    </form>
+
+
+</div> {% endblock %}

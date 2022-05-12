@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatroom</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+</head>
+
+<body>
+    <div style="display:flex;">
+
+
+        <div class="menu bg-darkblue">
+
+            <div class="logo-box">
+                <a href="/tasks"><img src="{% static 'img/joinlogo.png'%}" class="join-logo"></a>
+            </div>
+            {%if request.user.is_authenticated%}
+            <nav>
+                <a class="menu-link" href="/tasks">Board</a>
+                <a class="menu-link" href="/backlog">Backlog</a>
+                <a class="menu-link" href="/add-task">Add Task</a>
+                <a class="menu-link" href="./help.html ">Help</a>
+                <a class="menu-link " href="./privacy-policy.html ">Privacy Policy</a>
+                <a class="menu-link " href="./imprint.html ">Imprint</a>
+                <a class="menu-link " href="{% url 'logout' %}">Logout</a>
+            </nav>
+
+            <div class="menu-bottom-section hide-mobile ">
+                <img id="menuImg " src="{%static 'img/Soquat.png'%} " class="menu-img ">
+            </div>
+            {%endif%}
+        </div>
+
+
+
+        {%block content%}{%endblock%}
+    </div>
+</body>
+
+</html>

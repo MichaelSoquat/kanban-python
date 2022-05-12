@@ -16,6 +16,7 @@ from datetime import date, datetime
 def redirect(request):
     return HttpResponseRedirect('tasks/')
 # Create your views here.
+@login_required(login_url='/login/')
 def tasks_view(request):
     if request.method == 'POST':
          status = Status.objects.get(status = 'todo')
@@ -28,7 +29,9 @@ def tasks_view(request):
     return render(request, 'main/tasks.html', {'tasks': tasks})
 
 
-@login_required(login_url='/login/')
+    """
+    The login function matches the authentication to log in successfully.
+    """ 
 def login_view(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST.get('username'), password= request.POST.get('password'))
@@ -38,6 +41,11 @@ def login_view(request):
         else:
             return render(request, 'auth/login.html', {'wrongPassword': True,})
     return render(request, 'auth/login.html')
+
+    """
+    With the post method, new users can be added by providing such as username, email, password.
+    For the existing Django user model.
+    """
 
 def register_view(request):
     if request.method == "POST":
@@ -60,3 +68,7 @@ def register_view(request):
     return render(request = request,
                   template_name = "auth/register.html",
                   context={"form":form})
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/login/')

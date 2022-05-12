@@ -1,0 +1,55 @@
+.bg-darkblue {
+    background-color: rgb(30, 49, 144);
+}
+
+.logo-box {
+    display: flex;
+    justify-content: center;
+}
+
+.join-logo {
+    height: 3rem;
+    padding: 2rem;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    margin-right: 16px;
+}
+
+.menu-link {
+    text-decoration: none;
+    border-left: 3px solid rgb(30, 49, 144);
+    color: rgb(211, 211, 211);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding-left: 20%;
+}
+
+.menu-link:hover {
+    color: white;
+    border-left: 3px solid white;
+    cursor: pointer;
+}
+
+.menu-bottom-section {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-img {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 100%;
+    background-color: rgb(30, 49, 144);
+    margin: 2rem;
+}
