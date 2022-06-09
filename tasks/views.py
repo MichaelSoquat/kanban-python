@@ -21,14 +21,22 @@ def redirect(request):
     return HttpResponseRedirect('board/')
 
 
-# BOARD GET, CREATE, UPDATE, DELETE
+# BOARD CREATE, READ, UPDATE, DELETE
 
 @login_required(login_url='/login/')
 @api_view(['GET'])
-def board(request):
+def boards(request):
     boards= Board.objects.all()
     serializer = BoardSerializer(boards, many = True)
-    return Response(serializer.data)
+    return Response({'boards':serializer.data})
+    
+@api_view(['GET'])
+def board(request, pk):
+    board= Board.objects.get(id=pk)
+    tasks= Task.objects.filter(board__id = pk)
+    serializer_board = BoardSerializer(board, many = False)
+    serializer_tasks = TaskSerializer(tasks, many=True)
+    return Response(data = [serializer_board.data, serializer_tasks.data])
 
 @api_view(['POST'])
 def boardCreate(request):
@@ -41,7 +49,7 @@ def boardCreate(request):
 @api_view(['PUT'])
 def boardUpdate(request, pk):
     board = Board.objects.get(id=pk)
-    serializer = BoardSerializer(board, many = False)
+    serializer = BoardSerializer(instance = board, many = False)
     return Response(serializer.data)
 
 @api_view(['DELETE'])
@@ -51,31 +59,27 @@ def boardDelete(request,pk):
     return Response('Board deleted')
 
 
-# TASKS GET, CREATE, UPDATE, DELETE
+# TASKS CREATE, READ, UPDATE, DELETE
 
 
 @api_view(['GET'])
-def taskDetail(request, pk):
+def taskDetail(request, board_pk, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(task, many = False)
     return Response(serializer.data)
 
 @api_view(['POST'])
-def taskCreate(request):
-    
+def taskCreate(request, board_pk,):
+    request.data['board']=board_pk
     serializer = TaskSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
 
-@api_view(['GET'])
-def taskList(request):
-    tasks = Task.objects.all()
-    serializer = TaskSerializer(tasks, many = True)
-    return Response(serializer.data)
 
 @api_view(['PUT'])
-def taskUpdate(request, pk):
+def taskUpdate(request, board_pk, pk):
+    request.data['board']=board_pk
     task = Task.objects.get(id= pk)
     serializer = TaskSerializer(instance = task, data=request.data)
     if serializer.is_valid():
@@ -84,7 +88,7 @@ def taskUpdate(request, pk):
 
 
 @api_view(['DELETE'])
-def taskDelete(request, pk):
+def taskDelete(request, board_pk, pk):
     task = Task.objects.get(id= pk)
     task.delete()
     return Response('Task deleted')
