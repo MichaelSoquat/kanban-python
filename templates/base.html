@@ -20,11 +20,11 @@
         <div class="menu bg-darkblue">
 
             <div class="logo-box">
-                <a href="/tasks"><img src="{% static 'img/joinlogo.png'%}" class="join-logo"></a>
+                <a href="/board"><img src="{% static 'img/joinlogo.png'%}" class="join-logo"></a>
             </div>
             {%if request.user.is_authenticated%}
             <nav>
-                <a class="menu-link" href="/tasks">Board</a>
+                <a class="menu-link" href="/board">Board</a>
                 <a class="menu-link" href="/backlog">Backlog</a>
                 <a class="menu-link" href="/add-task">Add Task</a>
                 <a class="menu-link" href="./help.html ">Help</a>
