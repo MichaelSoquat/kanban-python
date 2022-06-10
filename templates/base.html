@@ -11,9 +11,30 @@
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     {%load static%}
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
+
+    <script>
+        async function test() {
+            //Get the Token of authenticated User: 
+            let formData = new FormData()
+            formData.append("username", "Horst2")
+            formData.append("password", "Sommer01")
+            formData.append("password_repeat", "Sommer01")
+            formData.append("email", "Horst@gmail.com")
+            formData.append("first_name", "Horst")
+            formData.append("last_name", "Seehofer")
+
+
+            let response = await fetch("/register/", {
+                method: "POST",
+                body: formData
+            })
+            let result = await response.json()
+            console.log("Response", result);
+        }
+    </script>
 </head>
 
-<body>
+<body onload="test()">
     <div style="display:flex;">
 
 
