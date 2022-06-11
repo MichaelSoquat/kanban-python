@@ -8,12 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 from django.db import IntegrityError
+from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from .models import Board, Task, Token
@@ -27,6 +28,7 @@ def testHtml(request):
 # BOARD CREATE, READ, UPDATE, DELETE
 
 @login_required(login_url='/login/')
+@permission_classes((IsAuthenticated, ))
 @api_view(['GET'])
 # @renderer_classes([JSONRenderer])
 # @renderer_classes([TemplateHTMLRenderer])
@@ -39,6 +41,7 @@ def boards(request):
 # template_name='main/board.html'
     
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def board(request, pk):
     board= Board.objects.get(id=pk)
     tasks= Task.objects.filter(board__id = pk)
@@ -47,6 +50,7 @@ def board(request, pk):
     return Response(data = [serializer_board.data, serializer_tasks.data])
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def boardCreate(request):
     
     serializer = BoardSerializer(data=request.data)
@@ -55,6 +59,7 @@ def boardCreate(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def boardUpdate(request, pk):
     board = Board.objects.get(id=pk)
     serializer = BoardSerializer(instance = board, data=request.data)
@@ -65,6 +70,7 @@ def boardUpdate(request, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
 def boardDelete(request,pk):
     board = Board.objects.get(id=pk)
     board.delete()
@@ -75,12 +81,14 @@ def boardDelete(request,pk):
 
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def taskDetail(request, board_pk, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(task, many = False)
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def taskCreate(request, board_pk,):
     request.data['board']=board_pk
     serializer = TaskSerializer(data=request.data)
@@ -90,6 +98,7 @@ def taskCreate(request, board_pk,):
 
 
 @api_view(['PUT'])
+@permission_classes((IsAuthenticated, ))
 def taskUpdate(request, board_pk, pk):
     request.data['board']=board_pk
     task = Task.objects.get(id= pk)
@@ -100,6 +109,7 @@ def taskUpdate(request, board_pk, pk):
 
 
 @api_view(['DELETE'])
+@permission_classes((IsAuthenticated, ))
 def taskDelete(request, board_pk, pk):
     task = Task.objects.get(id= pk)
     task.delete()

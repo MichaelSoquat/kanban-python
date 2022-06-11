@@ -16,12 +16,12 @@
         async function test() {
             //Get the Token of authenticated User: 
             let formData = new FormData()
-            formData.append("username", "Horst2")
-            formData.append("password", "Sommer01")
-            formData.append("password_repeat", "Sommer01")
-            formData.append("email", "Horst@gmail.com")
-            formData.append("first_name", "Horst")
-            formData.append("last_name", "Seehofer")
+            formData.append("username", "Sepp")
+            formData.append("password", "Wasser123")
+            formData.append("password_repeat", "Wasser123")
+            formData.append("email", "Sepp@gmx.de")
+            formData.append("first_name", "Sepp")
+            formData.append("last_name", "Hans")
 
 
             let response = await fetch("/register/", {
@@ -35,34 +35,8 @@
 </head>
 
 <body onload="test()">
-    <div style="display:flex;">
 
-
-        <div class="menu bg-darkblue">
-
-            <div class="logo-box">
-                <a href="/board"><img src="{% static 'img/joinlogo.png'%}" class="join-logo"></a>
-            </div>
-            {%if request.user.is_authenticated%}
-            <nav>
-                <a class="menu-link" href="/board">Board</a>
-                <a class="menu-link" href="/backlog">Backlog</a>
-                <a class="menu-link" href="/add-task">Add Task</a>
-                <a class="menu-link" href="./help.html ">Help</a>
-                <a class="menu-link " href="./privacy-policy.html ">Privacy Policy</a>
-                <a class="menu-link " href="./imprint.html ">Imprint</a>
-                <a class="menu-link " href="{% url 'logout' %}">Logout</a>
-            </nav>
-
-            <div class="menu-bottom-section hide-mobile ">
-                <img id="menuImg " src="{%static 'img/Soquat.png'%} " class="menu-img ">
-            </div>
-            {%endif%}
-        </div>
-
-
-
-        {%block content%}{%endblock%}
+    {%block content%}{%endblock%}
     </div>
 </body>
 
